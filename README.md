@@ -1,5 +1,5 @@
-[![Build Status](https://travis-ci.org/Colored-Coins/cc-request-id.svg?branch=master)](https://travis-ci.org/Colored-Coins/cc-request-id)
-[![Coverage Status](https://coveralls.io/repos/github/Colored-Coins/cc-request-id/badge.svg?branch=master)](https://coveralls.io/github/Colored-Coins/cc-request-id?branch=master)
+[![Build Status](https://travis-ci.org/Colored-Coins/request-id.svg?branch=master)](https://travis-ci.org/Colored-Coins/request-id)
+[![Coverage Status](https://coveralls.io/repos/github/Colored-Coins/request-id/badge.svg?branch=master)](https://coveralls.io/github/Colored-Coins/request-id?branch=master)
 [![npm version](https://badge.fury.io/js/cc-request-id.svg)](https://badge.fury.io/js/cc-request-id)
 # request-id
 Express.js request-id middleware.
