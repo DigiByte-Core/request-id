@@ -1,6 +1,6 @@
 {
   "name": "cc-request-id",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Express.js request-id middleware.",
   "main": "requestId.js",
   "author": "oleiba <oded@colu.com>",
