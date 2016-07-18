@@ -1,0 +1,30 @@
+{
+  "name": "cc-request-id",
+  "version": "0.0.0",
+  "description": "Express.js request-id middleware.",
+  "main": "requestId.js",
+  "author": "oleiba <oded@colu.com>",
+  "license": "MIT",
+  "scripts": {
+    "test": "mocha"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "keywords": [
+    "request-id",
+    "correlation-id",
+    "colored-coins"
+  ],
+  "dependencies": {
+    "crypto": "0.0.3",
+    "request": "^2.73.0",
+    "url": "^0.11.0",
+    "uuid": "^2.0.2"
+  },
+  "devDependencies": {
+    "cc-error-handler": "0.0.1",
+    "express": "^4.14.0",
+    "supertest": "^1.2.0"
+  }
+}
