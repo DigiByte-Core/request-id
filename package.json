@@ -4,9 +4,12 @@
   "description": "Express.js request-id middleware.",
   "main": "requestId.js",
   "author": "oleiba <oded@colu.com>",
+  "url": "https://github.com/Colored-Coins/request-id.git",
   "license": "MIT",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "coverage": "istanbul cover _mocha -- -R spec",
+    "coveralls": "cat ./coverage/lcov.info | coveralls"
   },
   "directories": {
     "test": "test"
