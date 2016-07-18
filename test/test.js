@@ -19,10 +19,12 @@ describe('Checking requestId', function () {
     return res.sendStatus(200)
   })
   app.use(errorHandler())
+
   it('should throw error since secret is mandatory', function (done) {
     assert.throws(function () { casimircore.request_id({ namespace: 'server1' }) }, 'Must provide secret')
     done()
   })
+
   it('should return 200 with a request ID, correlation ID in the response header', function (done) {
     request(app)
     .get('/')
@@ -33,6 +35,7 @@ describe('Checking requestId', function () {
     })
     .expect(200, done)
   })
+
   it('should return 200 and ignore our correlation-id with no service-secret', function (done) {
     request(app)
     .get('/')
@@ -45,6 +48,7 @@ describe('Checking requestId', function () {
     })
     .expect(200, done)
   })
+
   it('should return 200 and same cid since cid and sid are correct', function (done) {
     request(app)
     .get('/')
@@ -56,12 +60,14 @@ describe('Checking requestId', function () {
     })
     .expect(200, done)
   })
+
   it('should return 401 since sid exist without cid', function (done) {
     request(app)
     .get('/')
     .set('service-secret', sid)
     .expect(401, done)
   })
+
   it('should return 401 since sid is wrong', function (done) {
     request(app)
     .get('/')
@@ -77,6 +83,7 @@ describe('Checking requestid with default name', function () {
   app.get('/', function (req, res, next) {
     return res.sendStatus(200)
   })
+
   it('should return 200 with default namespace', function (done) {
     request(app)
     .get('/')
@@ -93,6 +100,7 @@ describe('Checking requestid throws', function () {
   app.get('/', function (req, res, next) {
     return res.sendStatus(200)
   })
+
   it('should return 500 since secret is not a buffer or string', function (done) {
     request(app)
     .get('/')
