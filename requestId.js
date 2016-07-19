@@ -12,7 +12,7 @@ module.exports = function (settings) {
   var serviceSecret = settings.serviceSecret || 'service-secret'
   var correlationId = settings.correlationId || 'correlation-id'
   var requestId = settings.requestId || 'request-id'
-  var namespace = (settings.namespace && (settings.namespace += '-')) || 'namespace-'
+  var namespace = (settings.namespace && (settings.namespace + '-')) || 'namespace-'
 
   return function (req, res, next) {
     var sid = req.headers && req.headers[serviceSecret]
@@ -22,7 +22,7 @@ module.exports = function (settings) {
     try {
       if (!sid) {
         cid = url.parse(req.originalUrl).pathname + '-' + rid
-        req.headers = cid
+        req.headers[correlationId] = cid
         sid = crypto.createHmac('md5', secret).update(cid).digest('hex')
       } else {
         if (!cid) return next(['Received service-secret in request headers but not correlation-id', 401])

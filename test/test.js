@@ -1,7 +1,9 @@
-/* global describe, it */
+/* eslint-env mocha */
 
 var requestId = require('../requestId.js')
 var request = require('supertest')
+var httpMocks = require('node-mocks-http')
+var portfinder = require('portfinder')
 var express = require('express')
 var assert = require('assert')
 var errorHandler = require('cc-error-handler')
@@ -21,7 +23,7 @@ describe('Checking requestId', function () {
   app.use(errorHandler())
 
   it('should throw error since secret is mandatory', function (done) {
-    assert.throws(function () { casimircore.request_id({ namespace: 'server1' }) }, 'Must provide secret')
+    assert.throws(function () { requestId({ namespace: 'server1' }) }, 'Must provide secret')
     done()
   })
 
@@ -94,7 +96,58 @@ describe('Checking requestid with default name', function () {
   })
 })
 
-describe('Checking requestid throws', function () {
+describe('Checking requestId request', function () {
+  var request, response
+
+  beforeEach(function (done) {
+    request = httpMocks.createRequest({
+      method: 'GET',
+      url: '/'
+    })
+    response = httpMocks.createResponse()
+    done()
+  })
+
+  it('should have headers with correalation-id and request-id, no service-secret', function (done) {
+    requestId({secret: '123', namespace: 'server1'})(request, response, function next (err) {
+      assert.equal(err, undefined)
+      assert.equal(request.headers['request-id'].split('-')[0], 'server1')
+      assert.equal(request.headers['correlation-id'].split('-')[0], '/')
+      assert.equal(request.headers['correlation-id'].split('-')[1], 'server1')
+      assert.equal(request.headers['service-secret'], undefined)
+      done()
+    })
+  })
+
+  it('.service.request headers should have correalation-id and service-secret, no request-id', function (done) {
+    requestId({secret: '123', namespace: 'server1'})(request, response, function next (err) {
+      assert.equal(err, undefined)
+      assert.ok(request.service)
+      assert.ok(request.service.request)
+      var app = express()
+      app.get('/', function (req, res, next) {
+        res.status(200).send(req.headers)
+      })
+      portfinder.getPort(function (err, port) {
+        if (err) throw new Error('Unable to find free port for test server')
+        app.listen(port, function (err) {
+          if (err) throw new Error('Unable to start test server')
+          request.service.request('http://localhost:' + port + '/', function (err, reponse, body) {
+            assert.equal(err, undefined)
+            body = JSON.parse(body)
+            assert.ok(body['service-secret'])
+            assert.equal(body['request-id'], undefined)
+            assert.equal(body['correlation-id'].split('-')[0], '/')
+            assert.equal(body['correlation-id'].split('-')[1], 'server1')
+            done()
+          })
+        })
+      })
+    })
+  })
+})
+
+describe('Checking requestId throws', function () {
   var app = express()
   app.use(requestId({secret: 123}))
   app.get('/', function (req, res, next) {

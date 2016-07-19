@@ -28,6 +28,8 @@
   "devDependencies": {
     "cc-error-handler": "0.0.1",
     "express": "^4.14.0",
+    "node-mocks-http": "^1.5.2",
+    "portfinder": "^1.0.5",
     "supertest": "^1.2.0"
   }
 }
