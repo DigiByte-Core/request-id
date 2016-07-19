@@ -57,9 +57,23 @@ describe('Checking requestId', function () {
     .set('correlation-id', cid)
     .set('service-secret', sid)
     .expect('correlation-id', cid)
+    .expect(200, done)
+  })
+
+  it('should return 200 without remote-id when not set', function (done) {
+    request(app)
+    .get('/')
     .expect(function (res) {
-      assert.equal(res.headers['correlation-id'], cid)
+      assert.equal(res.headers['remote-id'], undefined)
     })
+    .expect(200, done)
+  })
+
+  it('should return 200 with same remote-id when set', function (done) {
+    request(app)
+    .get('/')
+    .set('remote-id', 17)
+    .expect('remote-id', 17)
     .expect(200, done)
   })
 
@@ -97,29 +111,34 @@ describe('Checking requestid with default name', function () {
 })
 
 describe('Checking requestId request', function () {
+  var remoteId = 17
   var request, response
 
   beforeEach(function (done) {
     request = httpMocks.createRequest({
       method: 'GET',
-      url: '/'
+      url: '/',
+      headers: {
+        'remote-id': remoteId
+      }
     })
     response = httpMocks.createResponse()
     done()
   })
 
-  it('should have headers with correalation-id and request-id, no service-secret', function (done) {
+  it('should have headers with correalation-id, request-id and remote-id (if given), no service-secret', function (done) {
     requestId({secret: '123', namespace: 'server1'})(request, response, function next (err) {
       assert.equal(err, undefined)
       assert.equal(request.headers['request-id'].split('-')[0], 'server1')
       assert.equal(request.headers['correlation-id'].split('-')[0], '/')
       assert.equal(request.headers['correlation-id'].split('-')[1], 'server1')
+      assert.equal(request.headers['remote-id'], remoteId)
       assert.equal(request.headers['service-secret'], undefined)
       done()
     })
   })
 
-  it('.service.request headers should have correalation-id and service-secret, no request-id', function (done) {
+  it('.service.request headers should have correalation-id, service-secret and remote-if (if given), no request-id', function (done) {
     requestId({secret: '123', namespace: 'server1'})(request, response, function next (err) {
       assert.equal(err, undefined)
       assert.ok(request.service)
@@ -139,6 +158,7 @@ describe('Checking requestId request', function () {
             assert.equal(body['request-id'], undefined)
             assert.equal(body['correlation-id'].split('-')[0], '/')
             assert.equal(body['correlation-id'].split('-')[1], 'server1')
+            assert.equal(body['remote-id'], remoteId)
             done()
           })
         })

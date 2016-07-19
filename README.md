@@ -2,8 +2,11 @@
 [![Coverage Status](https://coveralls.io/repos/github/Colored-Coins/request-id/badge.svg?branch=master)](https://coveralls.io/github/Colored-Coins/request-id?branch=master)
 [![npm version](https://badge.fury.io/js/cc-request-id.svg)](https://badge.fury.io/js/cc-request-id)
 # request-id
-Express.js request-id middleware.
-Generates and sets a new request UUID in each request header (by default in `request-id` header), generates and sets a correlation UUID if not already exists (by default in `correlation-id` header).
+Express.js request-id middleware.<br>
+Generates and sets a new request UUID in each request header (by default in `request-id` header).<br>
+Generates and sets a new correlation UUID if not already exists (by default in `correlation-id` header).<br>
+Responds with the remote ID if given (allows server clients to pass their own identifier).<br>
+Encapsulates an HTTP client ([request](https://github.com/request/request)) within the request object as `req.service.request` which by default will pass forward the remote ID (if given) and the correlation ID headers.
 ## Installation
 ```sh
 $ npm install cc-request-id
@@ -24,12 +27,14 @@ Create new request-id middleware.
 Secret string for authenticating an incoming request correlation ID was generated from a trusted server holding the same secret.
 ##### namespace (optional)
 String to be used as prefix for every generated request-id (and conatenated right after the request URL path name in correlation ID, if generated)
-##### serviceSecret (optional)
+##### serviceSecretKey (optional)
 Key of the request header to be set for authenticating an incoming request correlation ID was generated from a trusted server holding the same secret.
-##### requestId (optional)
+##### requestIdKey (optional)
 Key of the request header to be set for the request ID.
-##### correlationId (optional)
+##### correlationIdKey (optional)
 Key of the request header to be set for the correlation ID.
+##### remoteIdKey (optional)
+Key of the request header to be set for the remote ID.
 
 ## Example
 ```javascript

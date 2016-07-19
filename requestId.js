@@ -9,20 +9,22 @@ module.exports = function (settings) {
   settings = settings || {}
   if (!settings.secret) throw new Error('Must provide secret')
   var secret = settings.secret
-  var serviceSecret = settings.serviceSecret || 'service-secret'
-  var correlationId = settings.correlationId || 'correlation-id'
-  var requestId = settings.requestId || 'request-id'
+  var serviceSecretKey = settings.serviceSecretKey || 'service-secret'
+  var correlationIdKey = settings.correlationIdKey || 'correlation-id'
+  var requestIdKey = settings.requestIdKey || 'request-id'
+  var remoteIdKey = settings.remoteIdKey || 'remote-id'
   var namespace = (settings.namespace && (settings.namespace + '-')) || 'namespace-'
 
   return function (req, res, next) {
-    var sid = req.headers && req.headers[serviceSecret]
-    var cid = req.headers && req.headers[correlationId]
+    var sid = req.headers && req.headers[serviceSecretKey]
+    var cid = req.headers && req.headers[correlationIdKey]
+    var remoteId = req.headers && req.headers[remoteIdKey]
     var rid = namespace + uuid.v4()
-    req.headers[requestId] = rid
+    req.headers[requestIdKey] = rid
     try {
       if (!sid) {
         cid = url.parse(req.originalUrl).pathname + '-' + rid
-        req.headers[correlationId] = cid
+        req.headers[correlationIdKey] = cid
         sid = crypto.createHmac('md5', secret).update(cid).digest('hex')
       } else {
         if (!cid) return next(['Received service-secret in request headers but not correlation-id', 401])
@@ -34,13 +36,15 @@ module.exports = function (settings) {
     }
 
     var headers = {}
-    headers[correlationId] = cid
-    headers[serviceSecret] = sid
+    headers[correlationIdKey] = cid
+    headers[serviceSecretKey] = sid
+    if (remoteId) headers[remoteIdKey] = remoteId
     req.service = {
       request: request.defaults({headers: headers})
     }
-    res.setHeader(requestId, rid)
-    res.setHeader(correlationId, cid)
+    res.setHeader(requestIdKey, rid)
+    res.setHeader(correlationIdKey, cid)
+    if (remoteId) res.setHeader(remoteIdKey, remoteId)
     return next()
   }
 }
