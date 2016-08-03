@@ -23,17 +23,15 @@ var requestId = require('cc-request-id')
 ### requestId(options)
 Create new request-id middleware.
 #### options
-##### secret
-Secret string for authenticating an incoming request correlation ID was generated from a trusted server holding the same secret.
-##### namespace (optional)
-String to be used as prefix for every generated request-id (and conatenated right after the request URL path name in correlation ID, if generated)
-##### serviceSecretKey (optional)
-Key of the request header to be set for authenticating an incoming request correlation ID was generated from a trusted server holding the same secret.
-##### requestIdKey (optional)
-Key of the request header to be set for the request ID.
-##### correlationIdKey (optional)
-Key of the request header to be set for the correlation ID.
-##### remoteIdKey (optional)
+`secret` Secret string for authenticating an incoming request correlation ID was generated from a trusted server holding the same secret.<br>
+`namespace` (optional) prefix for every generated request-id (and conatenated right after the request URL path name in correlation ID, if generated)<br>
+`serviceSecretKey` (optional)
+Key of the request header to be set for authenticating an incoming request correlation ID was generated from a trusted server holding the same secret.<br>
+`requestIdKey` (optional)
+Key of the request header to be set for the request ID.<br>
+`correlationIdKey` (optional)
+Key of the request header to be set for the correlation ID.<br>
+`remoteIdKey` (optional)
 Key of the request header to be set for the remote ID.
 
 ## Example
