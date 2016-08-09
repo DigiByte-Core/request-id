@@ -40,6 +40,7 @@ module.exports = function (settings) {
     headers[serviceSecretKey] = sid
     if (remoteId) headers[remoteIdKey] = remoteId
     req.service = {
+      headersToForward: headers,
       request: request.defaults({headers: headers})
     }
     res.setHeader(requestIdKey, rid)
