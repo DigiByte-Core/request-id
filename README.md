@@ -45,8 +45,8 @@ app.use(requestId({secret: '1234', namespace: 'myServer'}))
 app.use(bodyParser())
 app.get('/test', function (req, res, next) {
 	res.status(200).send({
-		requsetId: req.headers['request-id'],
-		corellationId: req.headers['correlation-id']
+		requestId: req.headers['request-id'],
+		correlationId: req.headers['correlation-id']
 	})
 })
 app.listen(8080)
@@ -58,5 +58,5 @@ curl http://localhost:8080/test
 outputs:
 ```
 requestId: myServer-32fd0631-5a10-4564-b8c7-f704be22f13a
-corellationId: /test-myServer-32fd0631-5a10-4564-b8c7-f704be22f13a
+correlationId: /test-myServer-32fd0631-5a10-4564-b8c7-f704be22f13a
 ```
