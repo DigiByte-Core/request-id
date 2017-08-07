@@ -24,16 +24,11 @@
     "colored-coins"
   ],
   "dependencies": {
-    "crypto": "0.0.3",
-    "request": "^2.73.0",
-    "url": "^0.11.0",
-    "uuid": "^2.0.2"
+    "request-id": "^0.11.1",
+    "uuid-1345": "^0.99.6"
   },
   "devDependencies": {
-    "cc-error-handler": "0.0.1",
     "express": "^4.14.0",
-    "node-mocks-http": "^1.5.2",
-    "portfinder": "^1.0.5",
     "supertest": "^1.2.0"
   }
 }
