@@ -3,10 +3,8 @@
 [![npm version](https://badge.fury.io/js/cc-request-id.svg)](https://badge.fury.io/js/cc-request-id)
 # request-id
 Express.js request-id middleware.<br>
-Generates and sets a new request UUID in each request header (by default in `request-id` header).<br>
-Generates and sets a new correlation UUID if not already exists (by default in `correlation-id` header).<br>
-Responds with the remote ID if given (allows server clients to pass their own identifier).<br>
-Encapsulates an HTTP client ([request](https://github.com/request/request)) within the request object as `req.service.request` which by default will pass forward the remote ID (if given) and the correlation ID headers.
+Generates and sets a new request UUID in request-id header, if not already set (by default in `X-Request-Id` header).<br>
+
 ## Installation
 ```sh
 $ npm install cc-request-id
