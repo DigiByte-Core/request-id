@@ -23,16 +23,9 @@ var requestId = require('cc-request-id')
 ### requestId(options)
 Create new request-id middleware.
 #### options
-`secret` Secret string for authenticating an incoming request correlation ID was generated from a trusted server holding the same secret.<br>
-`namespace` (optional) prefix for every generated request-id (and conatenated right after the request URL path name in correlation ID, if generated)<br>
-`serviceSecretKey` (optional)
-Key of the request header to be set for authenticating an incoming request correlation ID was generated from a trusted server holding the same secret.<br>
-`requestIdKey` (optional)
-Key of the request header to be set for the request ID.<br>
-`correlationIdKey` (optional)
-Key of the request header to be set for the correlation ID.<br>
-`remoteIdKey` (optional)
-Key of the request header to be set for the remote ID.
+See [request-id options](https://github.com/wilmoore/request-id.js#options).
+Exception:
+Default value generator function: [uuidv4fast]
 
 ## Example
 ```javascript
@@ -41,12 +34,11 @@ var app = express()
 var requestId = require('cc-request-id')
 var bodyParser = require('body-parser')
 
-app.use(requestId({secret: '1234', namespace: 'myServer'}))
+app.use(requestId())
 app.use(bodyParser())
 app.get('/test', function (req, res, next) {
 	res.status(200).send({
-		requestId: req.headers['request-id'],
-		correlationId: req.headers['correlation-id']
+		requestId: req.headers['X-Request-Id']
 	})
 })
 app.listen(8080)
@@ -57,6 +49,11 @@ curl http://localhost:8080/test
 ```
 outputs:
 ```
-requestId: myServer-32fd0631-5a10-4564-b8c7-f704be22f13a
-correlationId: /test-myServer-32fd0631-5a10-4564-b8c7-f704be22f13a
+requestId: 32fd0631-5a10-4564-b8c7-f704be22f13a
 ```
+
+## License
+
+[MIT](license)
+
+[uuidv4fast]:   https://github.com/scravy/uuid-1345#uuidv4fast
