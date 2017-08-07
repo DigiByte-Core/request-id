@@ -3,7 +3,8 @@
 [![npm version](https://badge.fury.io/js/cc-request-id.svg)](https://badge.fury.io/js/cc-request-id)
 # request-id
 Express.js request-id middleware.<br>
-Generates and sets a new request UUID in request-id header, if not already set (by default in `X-Request-Id` header).<br>
+Allows you to identify client requests within non-sequential logs by adding a response header of `X-Request-Id`.
+Allows setting value via query parameter or request header.
 
 ## Installation
 ```sh
@@ -35,7 +36,7 @@ var bodyParser = require('body-parser')
 app.use(requestId())
 app.use(bodyParser())
 app.get('/test', function (req, res, next) {
-  res.ssend('OK')
+  res.send('OK')
 })
 app.listen(8080)
 ```
