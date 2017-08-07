@@ -25,7 +25,7 @@ Create new request-id middleware.
 #### options
 See [request-id options](https://github.com/wilmoore/request-id.js#options).
 Exception:
-Default value generator function: [uuidv4fast]
+Default value generator function: [uuid-1345.v4fast]
 
 ## Example
 ```javascript
@@ -37,23 +37,21 @@ var bodyParser = require('body-parser')
 app.use(requestId())
 app.use(bodyParser())
 app.get('/test', function (req, res, next) {
-	res.status(200).send({
-		requestId: req.headers['X-Request-Id']
-	})
+  res.ssend('OK')
 })
 app.listen(8080)
 ```
 test it:
 ```
-curl http://localhost:8080/test
+curl http://localhost:8080/test -I | grep X-Request-Id
 ```
 outputs:
 ```
-requestId: 32fd0631-5a10-4564-b8c7-f704be22f13a
+X-Request-Id: 98401c07-e91a-40ca-813e-5407970de407
 ```
 
 ## License
 
 [MIT](license)
 
-[uuidv4fast]:   https://github.com/scravy/uuid-1345#uuidv4fast
+[uuid-1345.v4fast]:   https://github.com/scravy/uuid-1345#uuidv4fast
