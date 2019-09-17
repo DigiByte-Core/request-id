@@ -8,7 +8,7 @@ Allows setting value via query parameter or request header.
 
 ## Installation
 ```sh
-$ npm install cc-request-id
+$ npm install digiasset-request-id
 ```
 ## Running the tests
 ```
@@ -17,7 +17,7 @@ $ mocha
 ```
 ## API
 ```javascript
-var requestId = require('cc-request-id')
+var requestId = require('digiasset-request-id')
 ```
 ### requestId(options)
 Create new request-id middleware.
@@ -30,7 +30,7 @@ Default value generator function: [uuid-1345.v4fast]
 ```javascript
 var express = require('express')
 var app = express()
-var requestId = require('cc-request-id')
+var requestId = require('digiasset-request-id')
 var bodyParser = require('body-parser')
 
 app.use(requestId())

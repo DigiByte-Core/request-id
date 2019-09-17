@@ -1,10 +1,10 @@
 {
-  "name": "cc-request-id",
+  "name": "digiasset-request-id",
   "version": "0.1.0",
   "description": "Express.js request-id middleware.",
   "main": "requestId.js",
   "author": "oleiba <oded@colu.com>",
-  "url": "https://github.com/Colored-Coins/request-id.git",
+  "url": "https://github.com/DigiByte-Core/request-id.git",
   "license": "MIT",
   "scripts": {
     "test": "mocha",
@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Colored-Coins/request-id.git"
+    "url": "https://github.com/DigiByte-Core/request-id.git"
   },
   "directories": {
     "test": "test"
@@ -21,7 +21,8 @@
   "keywords": [
     "request-id",
     "correlation-id",
-    "colored-coins"
+    "colored-coins",
+    "digiasset"
   ],
   "dependencies": {
     "request-id": "^0.11.1",
