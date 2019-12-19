@@ -21,7 +21,6 @@
   "keywords": [
     "request-id",
     "correlation-id",
-    "colored-coins",
     "digiasset"
   ],
   "dependencies": {
